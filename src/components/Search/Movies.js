@@ -6,13 +6,6 @@ const { Meta } = Card;
 const Movies = ( { title, poster_path, overview, vote_average } ) => {
 
     return (
-        // <Card
-        //     hoverable
-        //     style={{ width: 240, padding: 8}}
-        //     cover={<img alt={ title } src={IMG_API + poster_path} />}
-        //     >
-        //     <Meta title={ title } description={ vote_average } />
-        // </Card>
         <div className='movie'>
             <img    src={IMG_API + poster_path} 
                     alt={title} />
@@ -25,17 +18,3 @@ const Movies = ( { title, poster_path, overview, vote_average } ) => {
 }
 
 export default Movies
-
-// import Movie from './Movie'
-
-// const Movies = ( { movies } ) => {
-//     return (
-//         <div classname='movies_container'>
-//             {movies.map(movie =>
-//                 <Movie key={movie.id} {...movie} />
-//             )}
-//         </div>
-//     )
-// }
-
-// export default Movies

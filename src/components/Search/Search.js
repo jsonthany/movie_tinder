@@ -47,19 +47,6 @@ const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw }) =
                 RandomMovieGenerator @2021 / Search
             </Footer>
         </Layout>
-        // <div className="search">
-        //     <SearchBar  searchfn={ searchfn }
-        //                 style={{ marginBottom: 100 }} />
-        //     <div classname='movies_container'
-        //         style={{ marginBottom: 12 }}>
-        //         <Row justify="center">
-        //             {movies.map(movie =>
-        //                 <Movies className='movies_container'
-        //                         key={movie.id} {...movie} />
-        //             )}
-        //         </Row>
-        //     </div>
-        // </div>
     )
 }
 
