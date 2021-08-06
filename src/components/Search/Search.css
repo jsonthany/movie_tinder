@@ -57,3 +57,8 @@
         max-height:385px;
         overflow-y:scroll;
 }
+
+.pages {
+    display: flex;
+    align-items: center;
+}
