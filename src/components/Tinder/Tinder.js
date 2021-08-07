@@ -1,13 +1,11 @@
 import FilterBar from './FilterBar';
 import Movie from './Movie';
-import { Layout, Select, DatePicker, Space, Button, Slider, Row } from 'antd';
+import { Layout } from 'antd';
 import './Tinder.css'
 
-const { RangePicker } = DatePicker;
-const { Option } = Select;
 const { Header, Footer, Content } = Layout;
 
-const Tinder = ({ movies }) => {
+const Tinder = ({ movies, generateRandomMovie }) => {
 
     return (
         <Layout className="tinder">
@@ -17,7 +15,8 @@ const Tinder = ({ movies }) => {
             </Header>
 
             <Content className="content">
-                    <Movie {...movies[2]} />
+                    <Movie  {...movies[0]}
+                            generateRandomMovie= { generateRandomMovie } />
             </Content>
 
             <Footer className="footer">

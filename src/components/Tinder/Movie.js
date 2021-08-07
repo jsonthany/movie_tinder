@@ -1,13 +1,17 @@
 import { Tag, Divider, Card, Avatar, Button, Row } from 'antd';
-import { CloseCircleOutlined, YoutubeOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, HeartTwoTone, YoutubeOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 
-const Movie = ( { title, poster_path, overview, vote_average, release_date } ) => {
+const Movie = ( { title, poster_path, overview, vote_average, release_date, generateRandomMovie } ) => {
 
     const monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     const newDate = new Date(release_date);
     const [month, day, year] = [newDate.getMonth(), newDate.getDate(), newDate.getFullYear()]
+
+    const onClickLike = () => {
+        generateRandomMovie();
+    }
 
     return (
         <div className='card_container'>
@@ -18,19 +22,25 @@ const Movie = ( { title, poster_path, overview, vote_average, release_date } ) =
                 style={{ width: '100%', height: '100%' }}
                 actions={[
                     <Button type="primary" danger shape="circle" icon={<CloseCircleOutlined />} size="large" />,
-                    <Button type="link" shape="circle" icon={<YoutubeOutlined style={{ fontSize: '150%', color: 'red'}} />} size="large" />,
-                    <Button type="primary" shape="circle" icon={<CheckCircleOutlined />} size="large" />,
+                    <Button type="link" shape="circle" icon={<HeartTwoTone twoToneColor='#eb2f96' style={{ fontSize: '150%'}} />} size="large" />,
+                    <Button type="primary" shape="circle" icon={<CheckCircleOutlined />} size="large" onClick={onClickLike} />,
                 ]}
             >
                 <Card   className="card_info"
                         title={title}
                         bordered={false}
                         style={{ width: '100%', height: '385px' }}>
-                    <p><b>Release: </b>{monthNames[month]} {day}, {year}</p>
-                    <p><b>Rating: </b>{vote_average}</p>
+                    <p><b>Release Date: </b>{monthNames[month]} {day}, {year}</p>
+                    <p><b>Rating: </b>{vote_average.toFixed(1)}</p>
                     <p>
                         <b>Overview: </b>
                         {overview}
+                    </p>
+                    <p>
+                        <YoutubeOutlined />
+                        YouTube Video Here
+                        <br />
+                        {title}
                     </p>
                 </Card>
             </Card>

@@ -12,21 +12,21 @@ function App() {
   let pageNumber = 1;
   let maxPage = 0;
 
-  let FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&language=en-US`;
-  let SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&api_key=API_KEY&query=`;
+  const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&language=en-US`;
+  const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&api_key=API_KEY&query=`;
 
   useEffect (() => {
     getMovie(FEATURED_API);
   }, []);
 
+  // get the Movie
   const getMovie = (API) => {
     fetch(API + '&page=' + pageNumber)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setMovies(data.results);
         setMoviesRaw(data);
-        maxPage=data.total_pages;
+        console.log(data);
       });
   }
 
@@ -53,16 +53,28 @@ function App() {
     }
   }
 
+  const generateRandomMovie = () => {
+    pageNumber = generateRandomNumber(moviesRaw.total_pages);
+    getMovie(FEATURED_API);
+    return movies[generateRandomNumber(movies.length)];
+  }
+
+  // returns an integer between 1 and max
+  const generateRandomNumber = (max) => {
+    return Math.floor(Math.random() * max) + 1;
+  }
+
   return (
     <>
       {/* <Header /> */}
       <Navbar />
-      <Search searchfn={ onSubmitHandler }
+      {/* <Search searchfn={ onSubmitHandler }
               movies={ movies }
               changePageNumber={ changePageNumber }
               pageNumber={pageNumber}
-              moviesRaw={moviesRaw} />
-      {/* <Tinder movies={ movies }/> */}
+              moviesRaw={moviesRaw} /> */}
+      <Tinder movies={ movies }
+              generateRandomMovie={ generateRandomMovie }  />
     </>
   );
 }
