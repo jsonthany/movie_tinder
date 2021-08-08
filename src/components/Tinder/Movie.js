@@ -3,14 +3,16 @@ import { CloseCircleOutlined, HeartTwoTone, YoutubeOutlined, CheckCircleOutlined
 import { useEffect, useState } from 'react';
 import Youtube from 'react-youtube';
 
-const IMG_API = "https://image.tmdb.org/t/p/w1280";
-
 
 const Movie = ( { id, title, poster_path, overview, vote_average, release_date, generateRandomMovie, randomItemNumber } ) => {
 
     const monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     const newDate = new Date(release_date);
     const [month, day, year] = [newDate.getMonth(), newDate.getDate(), newDate.getFullYear()];
+    const [youtube, setYoutube] = useState([]);
+
+    const IMG_API = "https://image.tmdb.org/t/p/w1280";
+    const YOUTUBE_LINK = `https://www.youtube.com/watch?v=`;
 
     const onClickLike = () => {
         generateRandomMovie();

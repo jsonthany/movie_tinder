@@ -1,6 +1,7 @@
 import Navbar from './components/NavBar/Navbar'
 import Search from './components/Search/Search'
 import Tinder from './components/Tinder/Tinder'
+import Youtube from 'react-youtube';
 
 import { useState, useEffect } from 'react';
 
@@ -29,8 +30,19 @@ function App() {
         setMovies(data.results);
         setMoviesRaw(data);
         setMaxPages(data.total_pages * 10);
+        getYouTube(data.results[randomItemNumber].id)
         console.log(data);
       });
+  }
+
+  const getYouTube = (id) => {
+    fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7`)
+        .then((res) => res.json())
+        .then((data) => {
+        setYoutube(data.results[0].key);
+        console.log(id);
+        console.log(data);
+    });
   }
 
   // Search for movies in the database
@@ -60,27 +72,27 @@ function App() {
     pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
     getMovie(FEATURED_API);
     setRandomItemNumber(generateRandomNumber(movies.length, 0));
-    console.log(randomItemNumber);
   }
 
   // returns an integer between 1 and max
-  const generateRandomNumber = (max, index) => {
-    return Math.floor(Math.random() * max) + index;
+  const generateRandomNumber = (max, indexBase) => {
+    return Math.floor(Math.random() * max) + indexBase;
   }
 
   return (
     <>
       {/* <Header /> */}
       <Navbar />
-      <Search searchfn={ onSubmitHandler }
+      {/* <Search searchfn={ onSubmitHandler }
               movies={ movies }
               changePageNumber={ changePageNumber }
               pageNumber={pageNumber}
               moviesRaw={moviesRaw}
-              maxPages={ maxPages } />
-      {/* <Tinder movies={ movies }
+              maxPages={ maxPages } /> */}
+      <Tinder movies={ movies }
               generateRandomMovie={ generateRandomMovie }
-              randomItemNumber={ randomItemNumber } /> */}
+              randomItemNumber={ randomItemNumber } />
+      <Youtube videoId={youtube} />
     </>
   );
 }
