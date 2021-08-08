@@ -9,8 +9,10 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [moviesRaw, setMoviesRaw] = useState([]);
   const [search, setSearch] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [randomItemNumber, setRandomItemNumber] = useState(0);
+  const [maxPages, setMaxPages] = useState(0);
   let pageNumber = 1;
-  let maxPage = 0;
 
   const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&language=en-US`;
   const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&api_key=API_KEY&query=`;
@@ -26,6 +28,7 @@ function App() {
       .then((data) => {
         setMovies(data.results);
         setMoviesRaw(data);
+        setMaxPages(data.total_pages * 10);
         console.log(data);
       });
   }
@@ -54,27 +57,30 @@ function App() {
   }
 
   const generateRandomMovie = () => {
-    pageNumber = generateRandomNumber(moviesRaw.total_pages);
+    pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
     getMovie(FEATURED_API);
-    return movies[generateRandomNumber(movies.length)];
+    setRandomItemNumber(generateRandomNumber(movies.length, 0));
+    console.log(randomItemNumber);
   }
 
   // returns an integer between 1 and max
-  const generateRandomNumber = (max) => {
-    return Math.floor(Math.random() * max) + 1;
+  const generateRandomNumber = (max, index) => {
+    return Math.floor(Math.random() * max) + index;
   }
 
   return (
     <>
       {/* <Header /> */}
       <Navbar />
-      {/* <Search searchfn={ onSubmitHandler }
+      <Search searchfn={ onSubmitHandler }
               movies={ movies }
               changePageNumber={ changePageNumber }
               pageNumber={pageNumber}
-              moviesRaw={moviesRaw} /> */}
-      <Tinder movies={ movies }
-              generateRandomMovie={ generateRandomMovie }  />
+              moviesRaw={moviesRaw}
+              maxPages={ maxPages } />
+      {/* <Tinder movies={ movies }
+              generateRandomMovie={ generateRandomMovie }
+              randomItemNumber={ randomItemNumber } /> */}
     </>
   );
 }

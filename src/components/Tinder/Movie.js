@@ -1,16 +1,20 @@
-import { Tag, Divider, Card, Avatar, Button, Row } from 'antd';
+import { Card, Button } from 'antd';
 import { CloseCircleOutlined, HeartTwoTone, YoutubeOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import Youtube from 'react-youtube';
 
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 
-const Movie = ( { title, poster_path, overview, vote_average, release_date, generateRandomMovie } ) => {
+
+const Movie = ( { id, title, poster_path, overview, vote_average, release_date, generateRandomMovie, randomItemNumber } ) => {
 
     const monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     const newDate = new Date(release_date);
-    const [month, day, year] = [newDate.getMonth(), newDate.getDate(), newDate.getFullYear()]
+    const [month, day, year] = [newDate.getMonth(), newDate.getDate(), newDate.getFullYear()];
 
     const onClickLike = () => {
         generateRandomMovie();
+        console.log(randomItemNumber);
     }
 
     return (
@@ -31,7 +35,8 @@ const Movie = ( { title, poster_path, overview, vote_average, release_date, gene
                         bordered={false}
                         style={{ width: '100%', height: '385px' }}>
                     <p><b>Release Date: </b>{monthNames[month]} {day}, {year}</p>
-                    <p><b>Rating: </b>{vote_average.toFixed(1)}</p>
+                    <p><b>Rating:</b> {vote_average}</p>
+                    
                     <p>
                         <b>Overview: </b>
                         {overview}
@@ -41,6 +46,10 @@ const Movie = ( { title, poster_path, overview, vote_average, release_date, gene
                         YouTube Video Here
                         <br />
                         {title}
+                        {id}
+                        {/* <YouTube
+                            videoId={}
+                        /> */}
                     </p>
                 </Card>
             </Card>

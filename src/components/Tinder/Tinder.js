@@ -2,10 +2,11 @@ import FilterBar from './FilterBar';
 import Movie from './Movie';
 import { Layout } from 'antd';
 import './Tinder.css'
+import App from '../../App';
 
 const { Header, Footer, Content } = Layout;
 
-const Tinder = ({ movies, generateRandomMovie }) => {
+const Tinder = ({ movies, generateRandomMovie, randomItemNumber }) => {
 
     return (
         <Layout className="tinder">
@@ -15,8 +16,9 @@ const Tinder = ({ movies, generateRandomMovie }) => {
             </Header>
 
             <Content className="content">
-                    <Movie  {...movies[0]}
-                            generateRandomMovie= { generateRandomMovie } />
+                    <Movie  {...movies[randomItemNumber]}
+                            generateRandomMovie= { generateRandomMovie }
+                            randomItemNumber={ randomItemNumber } />
             </Content>
 
             <Footer className="footer">

@@ -4,7 +4,7 @@ import { Row, Layout, Pagination } from 'antd';
 import './Search.css';
 
 
-const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw }) => {
+const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw, maxPages }) => {
 
     const { Header, Footer, Content } = Layout;
 
@@ -12,6 +12,7 @@ const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw }) =
 
     const onChange = (pageNum) => {
         changePageNumber(pageNum);
+        console.log(maxPages);
     }
 
     const getTotalPages = () => {
@@ -40,7 +41,7 @@ const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw }) =
                 <br />
                 <br />
                 <Row justify="center">
-                <Pagination defaultCurrent={1} pageSize={10} showSizeChanger={false} showcurrent={getCurrentPage()} total={getTotalPages()} onChange={onChange}/>
+                <Pagination defaultCurrent={1} pageSize={10} showSizeChanger={false} showcurrent={getCurrentPage()} total={maxPages} onChange={onChange}/>
                 </Row>
             </Content>
             <Footer className="footer">
