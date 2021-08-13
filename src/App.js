@@ -5,6 +5,8 @@ import Youtube from 'react-youtube';
 
 import { useState, useEffect } from 'react';
 
+const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
+
 function App() {
 
   const [movies, setMovies] = useState([]);
@@ -15,16 +17,19 @@ function App() {
   const [maxPages, setMaxPages] = useState(0);
   let pageNumber = 1;
 
-  const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&language=en-US`;
-  const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7&api_key=API_KEY&query=`;
+  const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`;
+  const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&api_key=API_KEY&query=`;
 
   useEffect (() => {
+    console.log('API_KEY');
+    console.log(API_KEY);
     getMovie(FEATURED_API);
   }, []);
 
   // get the Movie
   const getMovie = (API) => {
-    fetch(API + '&page=' + pageNumber)
+    try {
+      fetch(API + '&page=' + pageNumber)
       .then((res) => res.json())
       .then((data) => {
         setMovies(data.results);
@@ -33,16 +38,25 @@ function App() {
         getYouTube(data.results[randomItemNumber].id)
         console.log(data);
       });
+    } catch (err) {
+      console.log(err.message);
+    }
+    
   }
 
   const getYouTube = (id) => {
-    fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=a52ad5ea9ff27be0460bfc281fe3cbd7`)
+    try {
+      fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`)
         .then((res) => res.json())
         .then((data) => {
-        setYoutube(data.results[0].key);
+        // setYoutube(data.results[0].key); // todo
         console.log(id);
         console.log(data);
-    });
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+    
   }
 
   // Search for movies in the database
@@ -71,7 +85,7 @@ function App() {
   const generateRandomMovie = () => {
     pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
     getMovie(FEATURED_API);
-    setRandomItemNumber(generateRandomNumber(movies.length, 0));
+    // setRandomItemNumber(generateRandomNumber(movies.length, 0));
   }
 
   // returns an integer between 1 and max
