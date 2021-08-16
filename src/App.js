@@ -1,9 +1,9 @@
-import Navbar from './components/NavBar/Navbar'
-import Search from './components/Search/Search'
-import Tinder from './components/Tinder/Tinder'
-import Youtube from 'react-youtube';
-
 import { useState, useEffect } from 'react';
+import Navbar from './components/NavBar/Navbar';
+import Search from './components/Search/Search';
+import Tinder from './components/Tinder/Tinder';
+import Youtube from 'react-youtube';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
 
@@ -49,7 +49,7 @@ function App() {
       fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`)
         .then((res) => res.json())
         .then((data) => {
-        // setYoutube(data.results[0].key); // todo
+        setYoutube(data.results[0].key); // todo
         console.log(id);
         console.log(data);
       });
@@ -95,7 +95,6 @@ function App() {
 
   return (
     <>
-      {/* <Header /> */}
       <Navbar />
       {/* <Search searchfn={ onSubmitHandler }
               movies={ movies }
