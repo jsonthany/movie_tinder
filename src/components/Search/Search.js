@@ -8,16 +8,16 @@ const Search = ({ searchfn, movies, changePageNumber, pageNumber, moviesRaw, max
 
     const { Header, Footer, Content } = Layout;
 
-    let num = 1;
+    // let num = 1;
 
     const onChange = (pageNum) => {
         changePageNumber(pageNum);
         console.log(maxPages);
     }
 
-    const getTotalPages = () => {
-        return moviesRaw.total_pages * 10;
-    }
+    // const getTotalPages = () => {
+    //     return moviesRaw.total_pages * 10;
+    // }
 
     const getCurrentPage = () => {
         return moviesRaw.page;

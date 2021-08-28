@@ -2,7 +2,7 @@ import FilterBar from './FilterBar';
 import Movie from './Movie';
 import { Layout } from 'antd';
 import './Tinder.css'
-import App from '../../App';
+// import App from '../../App';
 
 const { Header, Footer, Content } = Layout;
 

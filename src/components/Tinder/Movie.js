@@ -1,7 +1,7 @@
 import { Card, Button } from 'antd';
 import { CloseCircleOutlined, HeartTwoTone, YoutubeOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import Youtube from 'react-youtube';
+// import { useEffect, useState } from 'react';
+// import Youtube from 'react-youtube';
 
 
 const Movie = ( { id, title, poster_path, overview, vote_average, release_date, generateRandomMovie, randomItemNumber } ) => {
@@ -9,14 +9,14 @@ const Movie = ( { id, title, poster_path, overview, vote_average, release_date, 
     const monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     const newDate = new Date(release_date);
     const [month, day, year] = [newDate.getMonth(), newDate.getDate(), newDate.getFullYear()];
-    const [youtube, setYoutube] = useState([]);
+    // const [youtube, setYoutube] = useState([]);
 
     const IMG_API = "https://image.tmdb.org/t/p/w1280";
-    const YOUTUBE_LINK = `https://www.youtube.com/watch?v=`;
+    // const YOUTUBE_LINK = `https://www.youtube.com/watch?v=`;
 
     const onClickLike = () => {
         generateRandomMovie();
-        console.log(randomItemNumber);
+        // console.log(randomItemNumber);
     }
 
     return (
