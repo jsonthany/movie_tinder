@@ -18,10 +18,10 @@ function App() {
   const [youtube, setYoutube] = useState('');
   const [randomItemNumber, setRandomItemNumber] = useState(0);
   const [maxPages, setMaxPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
+  // const [pageNumber, setPageNumber] = useState(1);
   
   // let randomItemNumber = 0;
-  // let pageNumber = 1;
+  let pageNumber = 1;
 
   // API from featured and search APIs
   const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`;
@@ -100,8 +100,8 @@ function App() {
   const generateRandomMovie = () => {
     // randomItemNumber = generateRandomNumber(movies.length, 0);
     setRandomItemNumber(generateRandomNumber(movies.length, 0));
-    // pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
-    setPageNumber(generateRandomNumber(moviesRaw.total_pages, 1));
+    pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
+    // setPageNumber(generateRandomNumber(moviesRaw.total_pages, 1));
     console.log(moviesRaw);
     console.log("item number: " + randomItemNumber);
     console.log("page number: " + pageNumber);
