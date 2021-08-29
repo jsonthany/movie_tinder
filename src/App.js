@@ -5,10 +5,13 @@ import Tinder from './components/Tinder/Tinder';
 import Youtube from 'react-youtube';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+// the API key used to pull in data
 const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
 
 function App() {
 
+  // useState and useEffect
+  const [movie, setMovie] = useState('');
   const [movies, setMovies] = useState([]);
   const [moviesRaw, setMoviesRaw] = useState([]);
   const [search, setSearch] = useState('');
@@ -20,32 +23,36 @@ function App() {
   // let randomItemNumber = 0;
   // let pageNumber = 1;
 
+  // API from featured and search APIs
   const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`;
   const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&api_key=API_KEY&query=`;
 
+  // initial data pull to fill in lists using getMovie
   useEffect (() => {
-    console.log(pageNumber);
-    console.log(API_KEY);
+    // console.log(pageNumber);
+    // console.log(API_KEY);
     getMovie(FEATURED_API);
   }, []);
 
-  // get the Movie
+  // get the Movie --> list of movies, list of raw data, max pages, youtube
   const getMovie = (API) => {
     try {
       fetch(API + '&page=' + pageNumber)
       .then((res) => res.json())
       .then((data) => {
+        setMovie(data.results[randomItemNumber]);
         setMovies(data.results);
         setMoviesRaw(data);
         setMaxPages(data.total_pages * 10);
         getYouTube(data.results[randomItemNumber].id)
-        console.log(data);
+        console.log(data.results[randomItemNumber]);
       });
     } catch (err) {
       console.log(err.message);
     }
   }
 
+  // to get data to fill in youtube video
   const getYouTube = (id) => {
     try {
       fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`)
@@ -78,6 +85,7 @@ function App() {
     }
   }
 
+  // whenever pagination is used; this changes the page number
   const changePageNumber = (page) => {
     pageNumber = page;
     
@@ -88,7 +96,7 @@ function App() {
     }
   }
 
-
+  // generates a random movie via random item and page generator
   const generateRandomMovie = () => {
     // randomItemNumber = generateRandomNumber(movies.length, 0);
     setRandomItemNumber(generateRandomNumber(movies.length, 0));
@@ -119,9 +127,9 @@ function App() {
                             maxPages={ maxPages } />
         )} />
         <Route exact path='/movie_tinder' render={
-          props => (<Tinder movies={ movies }
-                            generateRandomMovie={ generateRandomMovie }
-                            randomItemNumber={ randomItemNumber } />
+          props => (<Tinder movie = { movie }
+                            generateRandomMovie={ generateRandomMovie } />
+                            // randomItemNumber={ randomItemNumber }
                     
         )} />
         {/* <Search searchfn={ onSubmitHandler }

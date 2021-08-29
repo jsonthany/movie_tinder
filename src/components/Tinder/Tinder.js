@@ -6,7 +6,7 @@ import './Tinder.css'
 
 const { Header, Footer, Content } = Layout;
 
-const Tinder = ({ movies, generateRandomMovie, randomItemNumber }) => {
+const Tinder = ({ movie, generateRandomMovie, randomItemNumber }) => {
 
     return (
         <Layout className="tinder">
@@ -16,7 +16,7 @@ const Tinder = ({ movies, generateRandomMovie, randomItemNumber }) => {
             </Header>
 
             <Content className="content">
-                    <Movie  {...movies[randomItemNumber]}
+                    <Movie  { ...movie }
                             generateRandomMovie= { generateRandomMovie }
                             randomItemNumber={ randomItemNumber } />
             </Content>
