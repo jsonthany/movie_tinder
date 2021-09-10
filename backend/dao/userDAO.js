@@ -1,8 +1,4 @@
-import fetch from "node-fetch"
-import dotenv from "dotenv"
-
-dotenv.config()
-let movies
+let user
 
 export default class MoviesDAO {
     static async injectBD(conn) {
