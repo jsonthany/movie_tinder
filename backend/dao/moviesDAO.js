@@ -73,21 +73,23 @@ export default class MoviesDAO {
 
     static async getMovies({
         genre_id = "",
-        ratingLower = "9",
-        ratingUpper = "10",
+        ratingLower = 8,
+        ratingUpper = "",
         dateTimeLower = "",
         dateTimeUpper = "",
         page = 0,
         moviesPerPage = 20,
     } = {}) {
+
         let query
         query = {
                     $expr: {
                         $and: [
-                            { $cond: [ { $eq: [ genre_id, "" ] }, true,         { $in:          [ parseInt(genre_id),   "$genre_ids"      ] } ] },
-                            { $cond: [ { $eq: [ ratingLower, "" ] }, true,      { $gte:         [ "$vote_average",      parseFloat(ratingLower) ] } ] },
-                            { $cond: [ { $eq: [ ratingUpper, "" ] }, true,      { $lte:         [ "$vote_average",      parseFloat(ratingUpper) ] } ] },
-                            { $cond: [ { $eq: [ dateTimeLower, "" ] }, true,    { $eq:          [ "$release_date",      dateTimeLower ] } ] },
+                            { $cond: [ { $eq: [ genre_id, "" ] }, true,         { $in:          [ parseInt(genre_id),   "$genre_ids"    ] } ] },
+                            { $cond: [ { $eq: [ ratingLower, "" ] }, true,      { $gte:         [ "$vote_average",      ratingLower     ] } ] },
+                            { $cond: [ { $eq: [ ratingUpper, "" ] }, true,      { $lte:         [ "$vote_average",      ratingUpper     ] } ] },
+                            { $cond: [ { $eq: [ dateTimeLower, "" ] }, true,    { $gte:         [ "$release_date",      dateTimeLower   ] } ] },
+                            { $cond: [ { $eq: [ dateTimeUpper, "" ] }, true,    { $lte:         [ "$release_date",      dateTimeUpper   ] } ] },
                         ]
                     }
                 }
