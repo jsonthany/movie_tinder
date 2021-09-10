@@ -16,7 +16,7 @@ export default class MoviesDAO {
             return
         }
         try {
-            movies = await conn.db(process.env.RESTREVIEWS_NS).collection("movies_raw")
+            movies = await conn.db(process.env.MOVIE_TINDER_NS).collection("movies_raw")
             // movies.deleteMany({})
             
             // try {
@@ -73,8 +73,10 @@ export default class MoviesDAO {
 
     static async getMovies({
         genre_id = "",
-        rating = "5.4",
-        dateTime = "",
+        ratingLower = "9",
+        ratingUpper = "10",
+        dateTimeLower = "",
+        dateTimeUpper = "",
         page = 0,
         moviesPerPage = 20,
     } = {}) {
@@ -82,9 +84,10 @@ export default class MoviesDAO {
         query = {
                     $expr: {
                         $and: [
-                            { $cond: [ { $eq: [ genre_id, "" ] }, true, { $eq: [ "$genre_ids", genre_id ] } ] },
-                            { $cond: [ { $eq: [ rating, "" ] }, true, { $eq: [ "$vote_average", parseFloat(rating) ] } ] },
-                            { $cond: [ { $eq: [ dateTime, "" ] }, true, { $eq: [ "$release_date", dateTime ] } ] },
+                            { $cond: [ { $eq: [ genre_id, "" ] }, true,         { $in:          [ parseInt(genre_id),   "$genre_ids"      ] } ] },
+                            { $cond: [ { $eq: [ ratingLower, "" ] }, true,      { $gte:         [ "$vote_average",      parseFloat(ratingLower) ] } ] },
+                            { $cond: [ { $eq: [ ratingUpper, "" ] }, true,      { $lte:         [ "$vote_average",      parseFloat(ratingUpper) ] } ] },
+                            { $cond: [ { $eq: [ dateTimeLower, "" ] }, true,    { $eq:          [ "$release_date",      dateTimeLower ] } ] },
                         ]
                     }
                 }

@@ -4,18 +4,15 @@ export default class MoviesController {
     static async apiGetMovies(req, res, next) {
         const moviesPerPage = req.query.moviesPerPage ? parseInt(req.query.moviesPerPage, 10) : 20
         const page = req.query.page ? parseInt(page, 10) : 0
-
-        let filters = {}
-        if (req.query.cuisine) {
-            filters.cuisine = req.query.cuisine
-        } else if (req.query.zipcode) {
-            filters.zipcode = req.query.zipcode
-        } else if (req.query.name) {
-            filters.name = req.query.name
-        }
+        const genre_id = req.query.moviesPerPage
+        const ratingLower = req.query.moviesPerPage
+        const ratingUpper = req.query.moviesPerPage
+        const dateTimeLower = req.query.moviesPerPage
+        const dateTimeUpper = req.query.moviesPerPage
 
         const { moviesList, totalNumMovies } = await MoviesDAO.getMovies( {
-            filters,
+            ratingLower,
+            ratingUpper,
             page,
             moviesPerPage
         })
@@ -23,7 +20,7 @@ export default class MoviesController {
         let response = {
             movies: moviesList,
             page: page,
-            filters: filters,
+            // filters: filters,
             entries_per_page: moviesPerPage,
             total_results: totalNumMovies,
         }

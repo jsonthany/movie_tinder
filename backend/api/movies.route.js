@@ -8,9 +8,9 @@ router.route("/movies").get(MoviesController.apiGetMovies)
 
 router
     .route("/users")
-    .get(MoviesController.apiGetMovies)
-    .post(UserController.apiCreateNewUser)
-    .put(UserController.apiUpdateUser)
-    .delete(UserController.apiDeleteReview)
+    .get(UserController.apiGetUser)
+    // .post(UserController.apiCreateNewUser)
+    // .put(UserController.apiUpdateUser)
+    // .delete(UserController.apiDeleteReview)
 
 export default router

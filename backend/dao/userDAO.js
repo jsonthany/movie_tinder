@@ -3,63 +3,11 @@ let user
 export default class MoviesDAO {
     static async injectBD(conn) {
 
-        const API_KEY = process.env.MOVIE_API_KEY
-        const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`
-
-        // let pageNumber = 0
-
-        if (movies) {
+        if (user) {
             return
         }
         try {
-            movies = await conn.db(process.env.RESTREVIEWS_NS).collection("movies_raw")
-            // movies.deleteMany({})
-            
-            // try {
-            //     fetch(FEATURED_API + '&page=' + 1)
-            //     .then((res) => res.json())
-            //     .then((data) => {
-            //         for (let i = Number(data.total_pages) - 1; i >= 0 ; i--) {
-            //             // try {
-            //                 fetch(FEATURED_API + `&page=${i + 1}`)
-            //                 .then((res) => res.json())
-            //                 .then((data) => {
-            //                     for (let i = 0; i < Number(data.results.length); i++) {
-            //                         movies.updateOne(
-            //                             { 
-            //                                 _id: data.results[i].id 
-            //                             },
-            //                             {
-            //                                 $set: {
-            //                                     _id: data.results[i].id,
-            //                                     adult: data.results[i].adult,
-            //                                     backdrop_path: data.results[i].backdrop_path,
-            //                                     genre_ids: data.results[i].genre_ids,
-            //                                     original_language: data.results[i].original_language,
-            //                                     original_title: data.results[i].original_title,
-            //                                     overview: data.results[i].overview,
-            //                                     popularity: data.results[i].popularity,
-            //                                     poster_path: data.results[i].poster_path,
-            //                                     release_date: data.results[i].release_date,
-            //                                     title: data.results[i].title,
-            //                                     video: data.results[i].video,
-            //                                     vote_average: data.results[i].vote_average,
-            //                                     vote_count: data.results[i].vote_count,
-            //                                 }
-            //                             }, { upsert: true }
-            //                         )
-                                    
-            //                     }
-            //                 })
-            //             // } catch (err) {
-            //             //     console.log(err.message);
-            //             // }
-            //         }
-            //     })
-            // } catch (err) {
-            //     console.log(err.message);
-            // }
-            
+            user = await conn.db(process.env.MOVIE_TINDER_NS).collection("users")            
         } catch (e) {
             console.error(
                 `Unable to establish a collection handle in moviesDAO: ${e}`
@@ -67,10 +15,12 @@ export default class MoviesDAO {
         }
     }
 
-    static async getMovies({
+    static async getUser({
         genre_id = "",
-        rating = "5.4",
-        dateTime = "",
+        ratingLower = "",
+        ratingUpper = "",
+        dateTimeLower = "",
+        dateTimeUpper = "",
         page = 0,
         moviesPerPage = 20,
     } = {}) {
@@ -78,8 +28,9 @@ export default class MoviesDAO {
         query = {
                     $expr: {
                         $and: [
-                            { $cond: [ { $eq: [ genre_id, "" ] }, true, { $eq: [ "$genre_ids", genre_id ] } ] },
-                            { $cond: [ { $eq: [ rating, "" ] }, true, { $eq: [ "$vote_average", parseFloat(rating) ] } ] },
+                            { $cond: [ { $eq: [ genre_id, "" ] }, true, { $elemMatch:   [ "$genre_ids",         parseInt(genre_id)      ] } ] },
+                            { $cond: [ { $eq: [ rating, "" ] }, true,   { $gte:         [ "$vote_average",      parseFloat(ratingLower) ] } ] },
+                            { $cond: [ { $eq: [ rating, "" ] }, true,   { $lte:         [ "$vote_average",      parseFloat(ratingUpper) ] } ] },
                             { $cond: [ { $eq: [ dateTime, "" ] }, true, { $eq: [ "$release_date", dateTime ] } ] },
                         ]
                     }
