@@ -1,6 +1,7 @@
 import UserDAO from "../dao/userDAO.js"
 
 export default class UserController {
+    // get user account
     static async apiGetUser(req, res, next) {
         try {
             const userEmail = req.body.userEmail
@@ -19,62 +20,40 @@ export default class UserController {
         }
     }
 
+    // create new user account
+    static async apiCreateNewUser(req, res, next) {
+        try {
+            const userInfo = req.body.userAccount
+            const userResponse = await UserDAO.createNewUser(userInfo)
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
+
+
+    // update User Information
     static async apiUpdateUser(req, res, next) {
-        const userEmail = req.body.userEmail
-        const userName = req.body.userName
-        const userPassword = req.body.password
+        try {
+            const userInfo = req.body.userAccount
+            const userResponse = await UserDAO.createNewUser(userInfo)
 
-        // let filters = {}
-        // if (req.query.cuisine) {
-        //     filters.cuisine = req.query.cuisine
-        // } else if (req.query.zipcode) {
-        //     filters.zipcode = req.query.zipcode
-        // } else if (req.query.name) {
-        //     filters.name = req.query.name
-        // }
+            var { error } = userResponse
+            if (error) {
+                res.status(400).json({ error })
+            }
 
-        // const { moviesList, totalNumMovies } = await MoviesDAO.getMovies( {
-        //     filters,
-        //     page,
-        //     moviesPerPage
-        // })
-
-        // let response = {
-        //     movies: moviesList,
-        //     page: page,
-        //     filters: filters,
-        //     entries_per_page: moviesPerPage,
-        //     total_results: totalNumMovies,
-        // }
-        // res.json(response)
+            if (reviewResponse.modifiedCount === 0) {
+                throw new Error(
+                    "unable to update user info"
+                )
+            }
+        
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
     }
 
-    static async apiDeleteReview(req, res, next) {
-        // const moviesPerPage = req.query.moviesPerPage ? parseInt(req.query.moviesPerPage, 10) : 20
-        // const page = req.query.page ? parseInt(page, 10) : 0
-
-        // let filters = {}
-        // if (req.query.cuisine) {
-        //     filters.cuisine = req.query.cuisine
-        // } else if (req.query.zipcode) {
-        //     filters.zipcode = req.query.zipcode
-        // } else if (req.query.name) {
-        //     filters.name = req.query.name
-        // }
-
-        // const { moviesList, totalNumMovies } = await MoviesDAO.getMovies( {
-        //     filters,
-        //     page,
-        //     moviesPerPage
-        // })
-
-        // let response = {
-        //     movies: moviesList,
-        //     page: page,
-        //     filters: filters,
-        //     entries_per_page: moviesPerPage,
-        //     total_results: totalNumMovies,
-        // }
-        // res.json(response)
-    }
+    // DELETE USER??
 }

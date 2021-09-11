@@ -4,8 +4,9 @@ const ObjectId = mongodb.ObjectID
 let users
 
 export default class UserDAO {
-    static async injectBD(conn) {
 
+    // connect with the database
+    static async injectBD(conn) {
         if (users) {
             return
         }
@@ -19,6 +20,7 @@ export default class UserDAO {
         }
     }
 
+    // get a specific user account
     static async getUser({
         userName = "jasonthany",
         userEmail = "jasonthany@email.com",
@@ -50,13 +52,14 @@ export default class UserDAO {
         }
     }
 
-    static async addReview(restaurantId, user, review, date) {
+    // add a new user to the database
+    static async createNewUser(userInfo) {
         try {
-            const reviewDoc = {
-                _id: user._id, 
-                user_name: user.user_name,
-                password: password,
-                email: user.email,
+            const userAccount = {
+                _id: ObjectId(userInfo._id), 
+                user_name: userInfo.user_name,
+                password: userInfo.password,
+                email: userInfo.email,
                 movies: [],
                 preferences: [
                     { 12: 5 },
@@ -80,13 +83,38 @@ export default class UserDAO {
                     { 37: 5 },
                 ]
             }
-
-            return await users.insertOne(reviewDoc)
+            return await users.insertOne(userAccount)
         } catch (e) {
             console.error(`Unable to post review: ${e}`)
             return { error: e }
         }
     }
+
+    // add a new user to the database
+    static async updateUser(userInfo) {
+        try {
+            const updatedUserAccount = await users.updateOne(
+                { 
+                    user_id: ObjectId(userInfo._id),
+                    user_name: userInfo.user_name,
+                    email: userInfo.email,
+                },
+                { 
+                    $set: {
+                        movies: userInfo.movies,
+                        preferences: userInfo.preferences,
+                    }
+                },
+            )
+
+            return updatedUserAccount
+        } catch (e) {
+            console.error(`Unable to post user: ${e}`)
+            return { error: e }
+        }
+    }
+
+    // DELETE USER?
 }
 
 
