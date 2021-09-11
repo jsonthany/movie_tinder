@@ -7,27 +7,22 @@ export default class UserController {
             const userName = req.body.userName
             const userPassword = req.body.password
 
-            const { name, preferenceList, moviesList, filters } = await UserDAO.getUser(
+            const { cursor } = await UserDAO.getUser(
                 userEmail,
                 userName,
                 userPassword,
             )
 
-            let response = {
-                name: name,
-                preference: preferenceList,
-                movies: moviesList,
-                filters: filters,
-            }
-            res.json(response)
+            res.json(cursor)
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
     }
 
     static async apiUpdateUser(req, res, next) {
-        // const moviesPerPage = req.query.moviesPerPage ? parseInt(req.query.moviesPerPage, 10) : 20
-        // const page = req.query.page ? parseInt(page, 10) : 0
+        const userEmail = req.body.userEmail
+        const userName = req.body.userName
+        const userPassword = req.body.password
 
         // let filters = {}
         // if (req.query.cuisine) {

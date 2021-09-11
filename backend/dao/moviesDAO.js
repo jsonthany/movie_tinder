@@ -1,6 +1,9 @@
 import fetch from "node-fetch"
 import dotenv from "dotenv"
 
+import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectID
+
 dotenv.config()
 let movies
 
@@ -73,7 +76,7 @@ export default class MoviesDAO {
 
     static async getMovies({
         genre_id = "",
-        ratingLower = 8,
+        ratingLower = "",
         ratingUpper = "",
         dateTimeLower = "",
         dateTimeUpper = "",
