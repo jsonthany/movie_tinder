@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/NavBar/Navbar';
 import Search from './components/Search/Search';
 import Tinder from './components/Tinder/Tinder';
+import Login from './components/LogIn/Login';
 import Youtube from 'react-youtube';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -122,6 +123,7 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
+        <Route exact path='/login' render={ Login } />
         <Route exact path='/' render={
           props => (<Search searchfn={ onSubmitHandler }
                             movies={ movies }
