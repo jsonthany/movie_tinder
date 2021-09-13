@@ -10,9 +10,9 @@ const Login = () => {
     return (
         <>
         <Divider orientation="center">Log In</Divider>
-        <Row type="flex" align="middle" style={{minHeight: '50vh'}}>
-        <Col span={6}></Col>
-        <Col span={9}>
+        <Row type="flex" justify="space-between" align="middle" style={{minHeight: '50vh'}}>
+        <Col span={8}></Col>
+        <Col span={8}>
 
             <Form
                 name="normal_login"
@@ -20,6 +20,7 @@ const Login = () => {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
             >
+                
                 <Form.Item
                     name="username"
                     rules={[{ required: true, message: 'Please input your Username!' }]}
@@ -50,10 +51,12 @@ const Login = () => {
             </Form.Item>
 
             <Form.Item>
+            <Row justify="space-between" align="bottom">
             <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
             </Button>
-            Or <a href="">register now!</a>
+            <a href="">... or register now!</a>
+            </Row>
             </Form.Item>
             </Form>
             </Col>
