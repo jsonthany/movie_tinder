@@ -19,7 +19,7 @@ const Navbar = () => {
                     </Menu.Item>
                     :
                     <Menu.Item key="logout" icon={<LogoutOutlined />}>
-                        <Link to='/login'>
+                        <Link to='/logout'>
                             Logout
                         </Link>
                     </Menu.Item>

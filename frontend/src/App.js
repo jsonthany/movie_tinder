@@ -3,6 +3,7 @@ import Navbar from './components/NavBar/Navbar';
 import Search from './components/Search/Search';
 import Tinder from './components/Tinder/Tinder';
 import Login from './components/LogIn/Login';
+import Logout from './components/LogOut/Logout';
 import Youtube from 'react-youtube';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -124,6 +125,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path='/login' render={ Login } />
+        <Route exact path='/logout' render={ Logout } />
         <Route exact path='/' render={
           props => (<Search searchfn={ onSubmitHandler }
                             movies={ movies }
