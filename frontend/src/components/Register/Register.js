@@ -1,7 +1,7 @@
 import { Form, Input, Button, Checkbox, Row, Col, Divider } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const Logout = () => {
+const Register = () => {
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -15,17 +15,21 @@ const Logout = () => {
         <Col span={8}>
 
             <Form
-                name="normal_logout"
-                className="logout-form"
+                name="normal_register"
+                className="register-form"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
             >
                 
                 <Form.Item
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your Username!' }]}
+                    name="email"
+                    rules={[{ 
+                        required: true, 
+                        type: 'email', 
+                        message: 'Please input your Username!' 
+                    }]}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
                 </Form.Item>
                 
                 <Form.Item
@@ -55,7 +59,7 @@ const Logout = () => {
             <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Row justify="space-between" align="middle">
                 <Checkbox>Remember me</Checkbox>
-                <Button type="primary" htmlType="submit" className="logout-form-button">
+                <Button type="primary" htmlType="submit" className="register-form-button">
                     Register Account
                 </Button>
                 </Row>
@@ -76,4 +80,4 @@ const Logout = () => {
         )
 }
 
-export default Logout
+export default Register

@@ -18,8 +18,8 @@ const Navbar = () => {
                         </Link>
                     </Menu.Item>
                     :
-                    <Menu.Item key="logout" icon={<LogoutOutlined />}>
-                        <Link to='/logout'>
+                    <Menu.Item key="homepage" icon={<LogoutOutlined />}>
+                        <Link to='/'>
                             Logout
                         </Link>
                     </Menu.Item>
