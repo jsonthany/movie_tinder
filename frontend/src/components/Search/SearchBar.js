@@ -5,26 +5,27 @@ import { useState } from 'react';
 const SearchBar = ( { searchfn } ) => {
 
     const { Search } = Input;
-    const [searchTerm, setSearchTerm] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
     
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
+    const onSearch = (value) => {
+        // value.preventDefault();
         
-        searchfn(searchTerm);
-        setSearchTerm("");
+        // setSearchTerm(value);
+        searchfn(value);
+        // setSearchTerm("");
     }
 
     return (
         <Row>
             <Col span={14} offset={5}>
-                <form onSubmit={onSubmitHandler}>
-                    <Search
-                        className="input"
-                        placeholder='Search a film...'
-                        enterButton
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                </form>
+                {/* <form onSubmit={onSubmitHandler}> */}
+                <Search
+                    className="input"
+                    placeholder='Search a film...'
+                    enterButton
+                    onSearch={onSearch}
+                    />
+                {/* </form> */}
             </Col>
         </Row>
     )
