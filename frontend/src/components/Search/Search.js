@@ -13,15 +13,10 @@ const Search = () => {
 
     const { Header, Footer, Content } = Layout;
 
-    const [movie, setMovie] = useState('');
     const [movies, setMovies] = useState([]);
-    const [moviesRaw, setMoviesRaw] = useState([]);
     const [search, setSearch] = useState('');
-    const [randomItemNumber, setRandomItemNumber] = useState(0);
     const [maxPages, setMaxPages] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
-    
-    // let pageNumber = 1;
 
     // initial data pull to fill in lists using getMovie
     useEffect (() => {
@@ -30,7 +25,6 @@ const Search = () => {
         } else {
             getMovie(SEARCH_API + search);
         }
-        
     }, [movies, search]);
 
     // get the Movie --> list of movies, list of raw data, max pages, youtube
@@ -39,11 +33,8 @@ const Search = () => {
         fetch(API + '&page=' + pageNumber)
         .then((res) => res.json())
         .then((data) => {
-            setMovie(data.results[randomItemNumber]);
             setMovies(data.results);
-            setMoviesRaw(data);
             setMaxPages(data.total_pages * 10);
-            console.log(data.results[randomItemNumber]);
         });
         } catch (err) {
             console.log(err.message);
@@ -61,18 +52,10 @@ const Search = () => {
             setSearch('');
             getMovie(FEATURED_API);
         }
-
-        console.log(pageNumber)
     }
 
     const changePageNumber = (pageNum) => {
         setPageNumber(pageNum);
-        
-        if (search) {
-            getMovie(SEARCH_API + search);
-        } else {
-            getMovie(FEATURED_API);
-        }
     }
 
     return (
