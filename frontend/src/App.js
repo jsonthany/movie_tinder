@@ -41,11 +41,12 @@ function App() {
         setMoviesRaw(data);
         setMaxPages(data.total_pages * 10);
         try {
+          setRandomItemNumber(generateRandomNumber(movies.length, 0))
+          pageNumber = generateRandomNumber(moviesRaw.total_pages, 1);
           getYouTube(data.results[randomItemNumber].id)
         } catch (err) {
           console.log(err.message);
         }
-        console.log(data.results[randomItemNumber]);
       });
     } catch (err) {
       console.log(err.message);
@@ -69,7 +70,6 @@ function App() {
     } catch (err) {
       console.log(err.message);
     }
-    
   }
 
   // generates a random movie via random item and page generator
@@ -93,6 +93,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      {/* <Youtube videoId={youtube} /> */}
       <Switch>
         <Route exact path='/login' render={ Login } />
         <Route exact path='/register' render={ Register } />
@@ -101,14 +102,10 @@ function App() {
         )} />
         <Route exact path='/movie_tinder' render={
           props => (<Tinder movie = { movie }
-                            generateRandomMovie={ generateRandomMovie } />
+                            generateRandomMovie={ generateRandomMovie }
+                            youtube={ youtube } />
                             // randomItemNumber={ randomItemNumber }
-                    
         )} />
-        {/* <Tinder movies={ movies }
-                generateRandomMovie={ generateRandomMovie }
-                randomItemNumber={ randomItemNumber } /> */}
-        {/* <Youtube videoId={youtube} /> */}
       </Switch>
     </Router>
   );
