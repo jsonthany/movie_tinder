@@ -22,50 +22,50 @@ export default class MoviesDAO {
             movies = await conn.db(process.env.MOVIE_TINDER_NS).collection("movies_raw")
             // movies.deleteMany({})
             
-            // try {
-            //     fetch(FEATURED_API + '&page=' + 1)
-            //     .then((res) => res.json())
-            //     .then((data) => {
-            //         for (let i = Number(data.total_pages) - 1; i >= 0 ; i--) {
-            //             // try {
-            //                 fetch(FEATURED_API + `&page=${i + 1}`)
-            //                 .then((res) => res.json())
-            //                 .then((data) => {
-            //                     for (let i = 0; i < Number(data.results.length); i++) {
-            //                         movies.updateOne(
-            //                             { 
-            //                                 _id: data.results[i].id 
-            //                             },
-            //                             {
-            //                                 $set: {
-            //                                     _id: data.results[i].id,
-            //                                     adult: data.results[i].adult,
-            //                                     backdrop_path: data.results[i].backdrop_path,
-            //                                     genre_ids: data.results[i].genre_ids,
-            //                                     original_language: data.results[i].original_language,
-            //                                     original_title: data.results[i].original_title,
-            //                                     overview: data.results[i].overview,
-            //                                     popularity: data.results[i].popularity,
-            //                                     poster_path: data.results[i].poster_path,
-            //                                     release_date: data.results[i].release_date,
-            //                                     title: data.results[i].title,
-            //                                     video: data.results[i].video,
-            //                                     vote_average: data.results[i].vote_average,
-            //                                     vote_count: data.results[i].vote_count,
-            //                                 }
-            //                             }, { upsert: true }
-            //                         )
+            try {
+                fetch(FEATURED_API + '&page=' + 1)
+                .then((res) => res.json())
+                .then((data) => {
+                    for (let i = Number(data.total_pages) - 1; i >= 0 ; i--) {
+                        // // try {
+                        //     fetch(FEATURED_API + `&page=${i + 1}`)
+                        //     .then((res) => res.json())
+                        //     .then((data) => {
+                        //         for (let i = 0; i < Number(data.results.length); i++) {
+                        //             movies.updateOne(
+                        //                 { 
+                        //                     _id: data.results[i].id 
+                        //                 },
+                        //                 {
+                        //                     $set: {
+                        //                         _id: data.results[i].id,
+                        //                         adult: data.results[i].adult,
+                        //                         backdrop_path: data.results[i].backdrop_path,
+                        //                         genre_ids: data.results[i].genre_ids,
+                        //                         original_language: data.results[i].original_language,
+                        //                         original_title: data.results[i].original_title,
+                        //                         overview: data.results[i].overview,
+                        //                         popularity: data.results[i].popularity,
+                        //                         poster_path: data.results[i].poster_path,
+                        //                         release_date: data.results[i].release_date,
+                        //                         title: data.results[i].title,
+                        //                         video: data.results[i].video,
+                        //                         vote_average: data.results[i].vote_average,
+                        //                         vote_count: data.results[i].vote_count,
+                        //                     }
+                        //                 }, { upsert: true }
+                        //             )
                                     
-            //                     }
-            //                 })
-            //             // } catch (err) {
-            //             //     console.log(err.message);
-            //             // }
-            //         }
-            //     })
-            // } catch (err) {
-            //     console.log(err.message);
-            // }
+                        //         }
+                        //     })
+                        // // } catch (err) {
+                        // //     console.log(err.message);
+                        // // }
+                    }
+                })
+            } catch (err) {
+                console.log(err.message);
+            }
             
         } catch (e) {
             console.error(
