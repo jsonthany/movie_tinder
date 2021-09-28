@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Layout, Pagination } from 'antd';
 
-export default class Product extends Component {
+export default class Pages extends Component {
 
     state = {
         current: this.props.pageNumber,

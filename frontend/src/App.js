@@ -16,23 +16,17 @@ function App() {
   const [movie, setMovie] = useState('');
   const [movies, setMovies] = useState([]);
   const [moviesRaw, setMoviesRaw] = useState([]);
-  const [search, setSearch] = useState('');
   const [youtube, setYoutube] = useState('');
   const [randomItemNumber, setRandomItemNumber] = useState(0);
   const [maxPages, setMaxPages] = useState(0);
-  // const [pageNumber, setPageNumber] = useState(1);
-  
-  // let randomItemNumber = 0;
+
   let pageNumber = 1;
 
   // API from featured and search APIs
   const FEATURED_API = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`;
-  const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&api_key=API_KEY&query=`;
 
   // initial data pull to fill in lists using getMovie
   useEffect (() => {
-    // console.log(pageNumber);
-    // console.log(API_KEY);
     getMovie(FEATURED_API);
   }, []);
 
@@ -78,30 +72,6 @@ function App() {
     
   }
 
-  // Search for movies in the database
-  const onSubmitHandler = (search) => {
-    if (search) {
-      pageNumber = 1;
-      setSearch(search);
-      getMovie(SEARCH_API + search);
-    } else {
-      pageNumber = 1;
-      setSearch('');
-      getMovie(FEATURED_API);
-    }
-  }
-
-  // whenever pagination is used; this changes the page number
-  const changePageNumber = (page) => {
-    pageNumber = page;
-    
-    if (search) {
-      getMovie(SEARCH_API + search);
-    } else {
-      getMovie(FEATURED_API);
-    }
-  }
-
   // generates a random movie via random item and page generator
   const generateRandomMovie = () => {
     // randomItemNumber = generateRandomNumber(movies.length, 0);
@@ -127,12 +97,7 @@ function App() {
         <Route exact path='/login' render={ Login } />
         <Route exact path='/register' render={ Register } />
         <Route exact path='/' render={
-          props => (<Search searchfn={ onSubmitHandler }
-                            movies={ movies }
-                            changePageNumber={ changePageNumber }
-                            pageNumber={pageNumber}
-                            moviesRaw={moviesRaw}
-                            maxPages={ maxPages } />
+          props => (<Search />
         )} />
         <Route exact path='/movie_tinder' render={
           props => (<Tinder movie = { movie }
@@ -140,16 +105,10 @@ function App() {
                             // randomItemNumber={ randomItemNumber }
                     
         )} />
-        {/* <Search searchfn={ onSubmitHandler }
-                movies={ movies }
-                changePageNumber={ changePageNumber }
-                pageNumber={pageNumber}
-                moviesRaw={moviesRaw}
-                maxPages={ maxPages } /> */}
         {/* <Tinder movies={ movies }
                 generateRandomMovie={ generateRandomMovie }
                 randomItemNumber={ randomItemNumber } /> */}
-        <Youtube videoId={youtube} />
+        {/* <Youtube videoId={youtube} /> */}
       </Switch>
     </Router>
   );
